@@ -16,7 +16,7 @@
                             <ul>
                                 <li class="active"><a href="/">Home</a></li>
                                 <li><a href="/sample/sample">Rooms</a></li>
-                                <li><a href="#">Reservation</a></li>
+                                <li><a href="./booking/reservation.jsp">Reservation</a></li>
                                 <li><a href="#">Login</a></li>
                             </ul>
                         </nav>
