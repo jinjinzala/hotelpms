@@ -1,6 +1,6 @@
 package com.dev.hotelpms.room;
 
-public class RoomDTO {
+public class RoomVO {
 
     private Long roomNumber;
     private String roomType;

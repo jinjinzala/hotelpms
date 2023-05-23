@@ -2,7 +2,7 @@ package com.dev.hotelpms.booking;
 
 import java.util.Date;
 
-public class BookingDTO {
+public class BookingVO {
      private  String reservationNumber;
      private  Long roomNumber;
      private  String id;
