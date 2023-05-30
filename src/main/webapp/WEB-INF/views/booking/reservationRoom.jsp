@@ -59,7 +59,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-10 text-center">
                         <h2 class="mb-5 text-center">상세 예약 페이지</h2>
-                        <input type="text" class="form-control w-25 mx-auto mb-3" id="result" placeholder="Select date" disabled="">
+                        <input type="text" class="form-control w-25 mx-auto mb-3" id="result" placeholder="Select date" disabled="" >
                         <form action="#" class="row">
                             <div class="col-md-12">
                                 <div id="inline_cal"></div>
@@ -83,23 +83,34 @@
 
             <tbody>
             <c:forEach items="${type}" var="vo">
-                <tr>
-                    <td id="rtype">${vo.roomType}</td>
+            <tr>
+                <td id="rtype"> ${vo.roomType}</td>
+
+                <c:forEach items="${room}" var="ro">
+                    <c:choose>
+                        <c:when test="${vo.roomType eq ro.roomType}">
+                            <td><div class="bookable font-weight-bold text-primary">예약 가능</div></td>
+                        </c:when>
+                        <c:otherwise>
+
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
 
 
-                    <c:forEach items="${room}" var="ro">
+                <%--예약 가능한 내역이 0개라면 예약 불가 처리 --%>
+                <c:set var="count" value="0" />
+                <c:forEach items="${room}" var="ro">
+                    <c:if test="${vo.roomType eq ro.roomType}">
+                        <c:set var="count" value="${count + 1}" />
+                    </c:if>
+                </c:forEach>
 
-                        <c:if test="${vo.roomType eq  ro.roomType}">
-                            <td>예약 가능</td>
-                        </c:if>
+                <c:if test="${count == 0}">
+                    <td><div class="bookable font-weight-bold text-danger">예약불가</div></td>
+                </c:if>
+                    <%--예약 가능한 내역이 0개라면 예약 불가 처리 끝 --%>
 
-                        <c:if test="${vo.roomType ne ro.roomType}">
-                            <td>예약 완료</td>
-                        </c:if>
-
-
-
-                    </c:forEach>
                     <td>
                         <select id="guest">
                             <option value="1"> 1인 (최대 ${vo.capacity}인) </option>
@@ -126,21 +137,35 @@
                                 ${vo.roomPrice}
                         </div>
                     </td>
+                <c:set var="count" value="0" />
+                <c:forEach items="${room}" var="ro">
+                    <c:if test="${vo.roomType eq ro.roomType}">
+                        <c:set var="count" value="${count + 1}" />
+                    </c:if>
+                </c:forEach>
+
+                <c:if test="${count > 0}">
                     <td>
                         <button type="button" id="btn1"  class="btn1">선택</button>
                     </td>
+                </c:if>
+
+                <c:if test="${count == 0}">
+
+                    <td><div class="bookable font-weight-bold text-danger">예약 마감</div></td>
+                    </td>
+                </c:if>
                 </tr>
             </c:forEach>
             </tbody>
 
         </table>
         <form>
-            <div>
+            <div id="myDiv">
                 <input type="text" class="form-control" id="roomType" name="roomType">
                 <input type="text" class="form-control" id="guestCount" name="guestCount">
                 <input type="date" class="form-control" id="checkinDate" name="checkinDate">
                 <input type="date" class="form-control" id="checkoutDate" name="checkoutDate">
-
                 <input type="text" class="form-control" id="paymentAmount" name="paymentAmount">
             </div>
         </form>
@@ -224,5 +249,6 @@
     <script src="/calendar/js/rome.js"></script>
     <script src="/calendar/js/main.js"></script>
     <script src="/js/reservationRoom.js"></script>
+    <c:import url="../temp/js.jsp"></c:import>
 </body>
 </html>
